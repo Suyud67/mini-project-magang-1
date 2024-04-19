@@ -1,5 +1,7 @@
 import { Apple, Banana, Cherry, Citrus, Grape } from 'lucide-react';
 import Layout from './components/Layout';
+import Cards from './components/Cards';
+import { useState } from 'react';
 
 // cards data
 const cardsData = [
@@ -36,41 +38,44 @@ const cardsData = [
 ];
 
 function App() {
+  const [count, setCount] = useState<number>(0);
   return (
-    <Layout>
+    <Layout className="h-[1300px]">
       <div className="w-4/5 mx-auto mt-6">
         <h1 className="text-2xl text-center">Display Card</h1>
 
         {/* cards section */}
-        <section className="mt-4">
-          {/* isi data ini diganti dengan cardsData */}
-          <div className="w-2/5 bg-white rounded-lg text-black p-6">
-            <Apple width={50} height={50} />
-            <div>
-              <h1 className="text-lg">Apple</h1>
-              <p className="text-base">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptas iusto quas ab a accusamus doloribus totam
-                exercitationem libero repellat consectetur rem animi fuga
-                corporis molestiae necessitatibus, deleniti praesentium dicta
-                et!
-              </p>
-              <button className="bg-orange-400 mt-4 px-4 py-2 text-xl rounded-lg">
-                Lihat Detail
-              </button>
-            </div>
-          </div>
-        </section>
+
+        {/* isi data ini diganti dengan cardsData */}
+        <Cards data={cardsData} />
 
         {/* buatkan count */}
         {/* kondisi jika click button minus value tidak bisa minus (-1) */}
         {/* kondisi jika click button plus value tidak bisa lebih dari 30 */}
         <div className="w-2/5 mx-auto flex justify-evenly mt-32">
-          <button className="bg-slate-100 text-black w-10 h-10 text-3xl rounded-full">
+          <button
+            className="bg-slate-100 text-black w-10 h-10 text-3xl rounded-full"
+            onClick={() => {
+              setCount((prev) => {
+                if (count <= 0) {
+                  setCount(0);
+                }
+                return prev - 1;
+              });
+            }}>
             -
           </button>
-          <div className="text-2xl font-semibold">0</div>
-          <button className="bg-slate-100 text-black w-10 h-10 text-3xl rounded-full">
+          <div className="text-2xl font-semibold">{count}</div>
+          <button
+            className="bg-slate-100 text-black w-10 h-10 text-3xl rounded-full"
+            onClick={() => {
+              setCount((prev) => {
+                if (count >= 30) {
+                  setCount(count);
+                }
+                return prev + 1;
+              });
+            }}>
             +
           </button>
         </div>
